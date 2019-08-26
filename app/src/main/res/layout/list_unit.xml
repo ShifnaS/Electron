@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+   >
+
+    <TextView
+        android:id="@+id/unit_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:text="Termite - Duration ( X 15 Mins)"/>
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/decrease"
+            android:background="@drawable/textback"
+            android:textColor="@color/white"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:onClick="decreaseInteger"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/integer_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
+            android:text="0"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:background="@drawable/textback"
+            android:textColor="@color/white"
+            android:id="@+id/increase"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:onClick="increaseInteger"
+            android:text="+" />
+    </LinearLayout>
+
+</LinearLayout>
