@@ -23,17 +23,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 app:navigationIcon="@mipmap/ic_launcher"
-                app:title="Opened Services"
+                app:title="Electron Pest Control"
                 app:titleTextAppearance="@style/Toolbar.TitleText" />
 
-            <ImageView
+          <!--  <ImageView
                 android:id="@+id/mymenu"
                 android:layout_width="0.0dip"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15.0dip"
                 android:layout_weight="0.1"
                 android:gravity="end"
-                android:src="@drawable/ic_more_vert_black_24dp" />
+                android:src="@drawable/ic_more_vert_black_24dp" />-->
         </LinearLayout>
 
         <RelativeLayout
@@ -105,6 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
+                    android:textSize="18sp"
                     android:textColor="@color/colorPrimary"
                     android:text="Please select a method"/>
                 <android.support.v7.widget.RecyclerView
@@ -166,6 +167,8 @@
             </android.support.v7.widget.RecyclerView>
         </LinearLayout>
             <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/calenderview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -179,10 +182,99 @@
                     android:textColor="@color/colorText"
                     android:gravity="center"
                     android:textStyle="bold" />
+                <CalendarView
+                    style="@style/calender"
+                    android:id="@+id/calender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/textView1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                     />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/timeSlot"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+
+                </android.support.v7.widget.RecyclerView>
+
+                <TextView
+                    android:id="@+id/date"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  />
 
 
             </LinearLayout>
+            <LinearLayout
+                android:visibility="visible"
+                android:id="@+id/user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:background="@color/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:text="Your Personal Details"
+                    android:textColor="@color/colorText"
+                    android:gravity="center"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_margin="10dp"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical|center_horizontal">
+                    <Button
+                        android:background="@drawable/textback"
+                        android:textColor="@color/white"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="New User"/>
+                    <View
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="3dp"
+                        android:background="@color/colorPrimary"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        />
+                    <Button
+                        android:background="@drawable/textback"
+                        android:textColor="@color/white"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="Existing User"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <Button
+                android:visibility="gone"
+                android:id="@+id/appoinment"
+                android:layout_margin="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Get Appoinment"
+                android:textColor="@color/white"
+                android:background="@drawable/textback"/>
         </LinearLayout>
 
     </ScrollView>

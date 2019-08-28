@@ -31,7 +31,6 @@ import retrofit2.Response;
 public class ForgetPasswordActivity extends AppCompatActivity {
   @BindView(R.id.email)
   EditText et_email;
-  String auth;
   int userid;
   @BindView(R.id.btn_login)
   Button _loginButton;
@@ -48,7 +47,6 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     getSupportActionBar().setDisplayShowTitleEnabled(false);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setDisplayShowHomeEnabled(true);
-    auth= SharedPreferenceUtils.getInstance(getApplicationContext()).getStringValue(Constants.KEY_AUTH_TOKEN);
     userid= SharedPreferenceUtils.getInstance(getApplicationContext()).getIntValue(Constants.KEY_USER_ID);
 
     _loginButton.setOnClickListener(new View.OnClickListener() {

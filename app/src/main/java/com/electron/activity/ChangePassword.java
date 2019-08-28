@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.electron.api.APIService;
 import com.electron.api.ApiModule;
+import com.electron.model.ResponseChangePassword;
 import com.electron.model.ResponseLogin;
 import com.electron.utils.Constants;
 import com.electron.utils.NetworkUtil;
@@ -38,8 +39,10 @@ public class ChangePassword extends AppCompatActivity {
   Button _loginButton;
   @BindView(R.id.input_password_retype)
   EditText _input_password_retype;
-  String auth;
-  int userid;
+  private String auth;
+  private int userid;
+  private ProgressDialog progressDialog ;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -47,7 +50,8 @@ public class ChangePassword extends AppCompatActivity {
     getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN);
     setContentView(R.layout.activity_change_password);
-
+    progressDialog = new ProgressDialog(ChangePassword.this, R.style.AppTheme_Dark_Dialog);
+    progressDialog.setIndeterminate(true);
 
     Toolbar toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
@@ -61,7 +65,6 @@ public class ChangePassword extends AppCompatActivity {
       @Override
       public void onClick(View v) {
 
-        auth= SharedPreferenceUtils.getInstance(getApplicationContext()).getStringValue(Constants.KEY_AUTH_TOKEN);
         userid= SharedPreferenceUtils.getInstance(getApplicationContext()).getIntValue(Constants.KEY_USER_ID);
 
         if(NetworkUtil.isOnline())
@@ -80,8 +83,8 @@ public class ChangePassword extends AppCompatActivity {
 
 
   public void changepassword() {
-    //  Log.d(TAG, "Login");
-
+    progressDialog.setMessage("Updating...");
+    progressDialog.show();
     if (!validate()) {
       onFailed("Login failed");
       return;
@@ -104,14 +107,14 @@ public class ChangePassword extends AppCompatActivity {
               public void run() {
                 // On complete call either onLoginSuccess or onLoginFailed
                 String current = _input_password_current.getText().toString();
-                String password = _input_new_password_current.getText().toString();
+                String new_password = _input_new_password_current.getText().toString();
                 String retype = _input_new_password_current.getText().toString();
 
                 APIService service = ApiModule.getAPIService();
-                Call<ResponseLogin> call = service.changePassword(password,userid,auth);
-                call.enqueue(new Callback<ResponseLogin>() {
+                Call<ResponseChangePassword>call = service.changePassword("change_password",1,userid,"staff",current,new_password,retype );
+                call.enqueue(new Callback<ResponseChangePassword>() {
                   @Override
-                  public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
+                  public void onResponse(Call<ResponseChangePassword> call, Response<ResponseChangePassword> response) {
                     progressDialog.dismiss();
 
                     try
@@ -120,17 +123,17 @@ public class ChangePassword extends AppCompatActivity {
                       {
                         if(response.body().getStatuscode()==200)
                         {
-                         // Toast.makeText(ChangePassword.this, response.body().getStatus(), Toast.LENGTH_SHORT).show();
+                          Toast.makeText(ChangePassword.this, response.body().getResponse(), Toast.LENGTH_SHORT).show();
                           onSuccess();
                         }
                         else
                         {
-                          onFailed("Failed to Change ");
+                          onFailed(response.body().getResponse());
                         }
                       }
                       else
                       {
-                        onFailed("Server Busy");
+                        onFailed("No response from the server");
                       }
 
 
@@ -146,8 +149,9 @@ public class ChangePassword extends AppCompatActivity {
                   }
 
                   @Override
-                  public void onFailure(Call<ResponseLogin> call, Throwable t) {
-                    //       progressBar.setVisibility(View.GONE);
+                  public void onFailure(Call<ResponseChangePassword> call, Throwable t) {
+                    progressDialog.dismiss();
+
 
                     Log.e("MyTag", "requestFailed", t);
                     Log.e("Failure ",t.getMessage());
@@ -179,23 +183,10 @@ public class ChangePassword extends AppCompatActivity {
     String current = _input_password_current.getText().toString().trim();
     String new_password = _input_new_password_current.getText().toString().trim();
     String retype = _input_password_retype.getText().toString().trim();
-    String old= SharedPreferenceUtils.getInstance(getApplicationContext()).getStringValue(Constants.KEY_AUTH_PASSWORD);
 
-    if(current.isEmpty() || !current.equals(old))
+    if (current.isEmpty())
     {
-      _input_password_current.setError("Incorrect old password");
-      valid = false;
-    }
-    else
-    {
-      _input_password_current.setError(null);
-    }
-
-
-
-    if (new_password.isEmpty() || new_password.length() < 4 || new_password.length() > 10)
-    {
-      _input_new_password_current.setError("between 4 and 10 alphanumeric characters");
+      _input_new_password_current.setError("please enter the field");
       valid = false;
     }
     else
@@ -203,9 +194,20 @@ public class ChangePassword extends AppCompatActivity {
       _input_new_password_current.setError(null);
     }
 
-    if (retype.isEmpty() || !retype.equals(new_password))
+
+    if (new_password.isEmpty() || new_password.length() < 4 || new_password.length() > 10)
     {
-      _input_password_retype.setError("password mismatch");
+      _input_new_password_current.setError("password must between 4 and 10 alphanumeric characters");
+      valid = false;
+    }
+    else
+    {
+      _input_new_password_current.setError(null);
+    }
+
+    if (retype.isEmpty() )
+    {
+      _input_password_retype.setError("please enter the field");
       valid = false;
     }
     else

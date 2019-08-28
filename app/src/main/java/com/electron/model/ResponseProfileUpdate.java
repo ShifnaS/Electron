@@ -1,13 +1,11 @@
 package com.electron.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 
-public class ResponseProfile {
+public class ResponseProfileUpdate {
   private int statuscode;
 
-  private ArrayList<Profile> response;
+  private String response;
 
   private String status;
 
@@ -21,12 +19,12 @@ public class ResponseProfile {
     this.statuscode = statuscode;
   }
 
-  public ArrayList<Profile> getProfile ()
+  public String getProfile ()
   {
     return response;
   }
 
-  public void setProfile (ArrayList<Profile> response)
+  public void setProfile (String response)
   {
     this.response = response;
   }

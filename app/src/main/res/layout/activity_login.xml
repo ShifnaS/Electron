@@ -76,7 +76,7 @@
             android:textColor="@color/colorPrimary"
             android:textSize="16.0sp"
             android:textStyle="bold" />
-
+<!--
         <TextView
             android:id="@+id/link_signup"
             android:layout_width="fill_parent"
@@ -86,6 +86,6 @@
             android:text="Forget Password?"
             android:textColor="@color/colorText"
             android:textColorHint="@color/colorText"
-            android:textSize="16.0dip" />
+            android:textSize="16.0dip" />-->
     </LinearLayout>
 </ScrollView>

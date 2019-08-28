@@ -1,17 +1,15 @@
 package com.electron.activity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.Menu;
@@ -26,26 +24,20 @@ import android.widget.Toast;
 
 import com.electron.api.APIService;
 import com.electron.api.APIUrl;
-import com.electron.fragment.OpenedFragment;
-import com.electron.fragment.RequestedFragment;
-import com.electron.model.ResponseNotification;
+import com.electron.fragment.AllTaskFragment;
+import com.electron.fragment.DailyFragment;
 import com.electron.utils.Constants;
 import com.electron.utils.NetworkUtil;
-import com.electron.utils.PaginationAdapterCallback;
 import com.electron.utils.SharedPreferenceUtils;
 import com.electron.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -68,9 +60,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
   Toolbar topToolBar;
 
 
-  String service="";
-  int rollId,userId;
-  String token="";
+  private String service="";
+  private int rollId,userId;
+  private String token="";
+  private FloatingActionButton fab;
 
 
   Retrofit retrofit;
@@ -88,6 +81,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     ButterKnife.bind(this);
     _opened.setOnClickListener(this);
     _requested.setOnClickListener(this);
+    fab=findViewById(R.id.fab);
 
     menus.setOnClickListener(this);
 
@@ -102,6 +96,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     //  _opened.setImageResource(R.drawable.ic_opened_services_active);
     loadHomeFragment();
 
+    fab.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        // We are showing only toast message. However, you can do anything you need.
+        /// Toast.makeText(getContext(), "You clicked Floating Action Button", Toast.LENGTH_SHORT).show();
+        Intent i=new Intent(getApplicationContext(), AppoinmentActivity.class);
+        startActivity(i);
+      }
+    });
 
     HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
     interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -134,9 +137,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
   }
 
   private void loadHomeFragment() {
-    OpenedFragment openedFragment = new OpenedFragment();
+    DailyFragment dailyFragment = new DailyFragment();
     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-    fragmentTransaction.replace(R.id.output, openedFragment);
+    fragmentTransaction.replace(R.id.output, dailyFragment);
     fragmentTransaction.commit();
   }
   @Override
@@ -158,7 +161,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         {
             //Toast.makeText(this, "hii", Toast.LENGTH_SHORT).show();
 
-          OpenedFragment requestedFragment = new OpenedFragment();
+          DailyFragment requestedFragment = new DailyFragment();
           FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
           fragmentTransaction.replace(R.id.output, requestedFragment);
           fragmentTransaction.commit();
@@ -181,7 +184,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         _requested.setText("All Task");
         if(NetworkUtil.isOnline())
         {
-          RequestedFragment requestedFragment = new RequestedFragment();
+          AllTaskFragment requestedFragment = new AllTaskFragment();
           FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
           fragmentTransaction.replace(R.id.output, requestedFragment);
           fragmentTransaction.commit();
@@ -214,30 +217,30 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     //Inflating the Popup using xml file
-  //  popup.getMenuInflater().inflate(R.menu.menu, popup.getMenu());
+    popup.getMenuInflater().inflate(R.menu.menu, popup.getMenu());
 
     //registering popup with OnMenuItemClickListener
     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
       public boolean onMenuItemClick(MenuItem item) {
         Intent i;
-       // Toast.makeText(HomeActivity.this,"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+        // Toast.makeText(HomeActivity.this,"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
         switch (item.getTitle().toString())
         {
 
           case "Profile" :
-            i=new Intent(getApplicationContext(), ProfileActivity.class);
+            i=new Intent(getApplicationContext(),ProfileActivity.class);
             startActivity(i);
             break;
           case "Change Password" :
-            i=new Intent(getApplicationContext(), ChangePassword.class);
+            i=new Intent(getApplicationContext(),ChangePassword.class);
             startActivity(i);
             break;
           case "Logout" :
             // showBottomSheetDialog();
-            String auth= SharedPreferenceUtils.getInstance(getApplicationContext()).getStringValue(Constants.KEY_AUTH_TOKEN);
+            String auth=SharedPreferenceUtils.getInstance(getApplicationContext()).getStringValue(Constants.KEY_AUTH_PASSWORD);
             SharedPreferenceUtils.getInstance(getApplicationContext()).clear();
-            SharedPreferenceUtils.getInstance(getApplicationContext()).setStringValue(Constants.KEY_AUTH_TOKEN,auth);
-            i=new Intent(getApplicationContext(), LoginActivity.class);
+            SharedPreferenceUtils.getInstance(getApplicationContext()).setStringValue(Constants.KEY_AUTH_PASSWORD,auth);
+            i=new Intent(getApplicationContext(),LoginActivity.class);
             startActivity(i);
             finish();
             break;

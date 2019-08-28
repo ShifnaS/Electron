@@ -40,8 +40,7 @@ public class LoginActivity extends AppCompatActivity {
   EditText _passwordText;
   @BindView(R.id.btn_login)
   Button _loginButton;
-  @BindView(R.id.link_signup)
-  TextView _signupLink;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -69,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         }
       }
     });
-
+/*
     _signupLink.setOnClickListener(new View.OnClickListener() {
 
       @Override
@@ -79,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
       }
-    });
+    });*/
 
 
   }
@@ -146,11 +145,13 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         else
                         {
+                          _loginButton.setEnabled(true);
                           onLoginFailed("Invalid User Name or Password");
                         }
                       }
                       else
                       {
+                        _loginButton.setEnabled(true);
                         onLoginFailed("Invalid User Name or Password");
                       }
 
@@ -160,7 +161,7 @@ public class LoginActivity extends AppCompatActivity {
                     {
                       e.printStackTrace();
                       Log.e("Exception ",e.getMessage());
-
+                      _loginButton.setEnabled(true);
                       progressDialog.dismiss();
 
                     }
@@ -171,7 +172,7 @@ public class LoginActivity extends AppCompatActivity {
                   public void onFailure(Call<ResponseLogin> call, Throwable t) {
                     //       progressBar.setVisibility(View.GONE);
                     progressDialog.dismiss();
-
+                    _loginButton.setEnabled(true);
                     Log.e("MyTag", "requestFailed", t);
                     Log.e("Failure ",t.getMessage());
 

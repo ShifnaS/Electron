@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.electron.activity.AppoinmentActivity">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="fill_parent"
+        android:layout_height="200.0dip"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10.0dip"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                app:navigationIcon="@mipmap/ic_launcher"
+                app:title="Electron Pest Control"
+                app:titleTextAppearance="@style/Toolbar.TitleText" />
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50.0dip"
+            android:layout_marginLeft="20.0dip"
+            android:layout_marginTop="70.0dip"
+            android:layout_marginRight="20.0dip"
+            android:background="@drawable/toolbarback"
+            android:gravity="center"
+            android:layout_gravity="bottom|center_vertical"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:text="New Booking" />
+
+
+
+        </RelativeLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:background="@color/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:text="Client Details"
+                    android:textColor="@color/colorText"
+                    android:gravity="center"
+                    android:textStyle="bold" />
+                <LinearLayout
+                  android:layout_margin="10dp"
+                  android:orientation="horizontal"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+
+                  <TextView
+                      android:textStyle="bold"
+                      android:text="Client Name"
+                      android:layout_width="0dp"
+                      android:layout_weight="1"
+                      android:layout_height="wrap_content"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:text=":"
+                        android:layout_width="0dp"
+                        android:layout_weight=".5"
+                        android:layout_height="wrap_content"/>
+                  <TextView
+                      android:textStyle="bold"
+                      android:id="@+id/client_name"
+                      android:layout_width="0dp"
+                      android:layout_weight="2"
+                      android:layout_height="wrap_content"/>
+              </LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:text="Date"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:text=":"
+                        android:layout_width="0dp"
+                        android:layout_weight=".5"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:textStyle="bold"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:text="Time:  "
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:text=":"
+                        android:layout_width="0dp"
+                        android:layout_weight=".5"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:id="@+id/time"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:text="Payment Type"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:text=":"
+                        android:layout_width="0dp"
+                        android:layout_weight=".5"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/payment_method"
+                        android:textStyle="bold"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:text="Booking Price"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:text=":"
+                        android:layout_width="0dp"
+                        android:layout_weight=".5"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/price"
+                        android:textStyle="bold"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_gravity="center|bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:text="Service Details"
+                    android:textColor="@color/colorText"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:text="Service Nam"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:text=":"
+                        android:layout_width="0dp"
+                        android:layout_weight=".5"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/service_name"
+                        android:textStyle="bold"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:text="Method Name"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:text=":"
+                        android:layout_width="0dp"
+                        android:layout_weight=".5"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:id="@+id/method_name"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:text="Unit Name"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:text=":"
+                        android:layout_width="0dp"
+                        android:layout_weight=".5"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:id="@+id/unit_name"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:text="Addon"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:text=":"
+                        android:layout_width="0dp"
+                        android:layout_weight=".5"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/addon"
+                        android:textStyle="bold"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/colorPrimary"/>
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:text="Remarks"
+                        android:textSize="18sp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+                    <EditText
+                        android:id="@+id/remark"
+                       android:gravity="top"
+                        android:background="@drawable/extraback"
+                        android:padding="10dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="80dp"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:text="Signature"
+                        android:textSize="18sp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+
+                    <android.gesture.GestureOverlayView
+                        android:id="@+id/sign_pad"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="100dp"
+                        android:background="@drawable/extraback"
+                        android:fadeEnabled="false"
+                        android:fadeOffset="10000"
+                        android:gestureColor="@color/colorPrimary"
+                        android:uncertainGestureColor="@android:color/holo_red_light"
+                        android:gestureStrokeLengthThreshold="0.1"
+                        android:gestureStrokeType="multiple"
+                        android:orientation="vertical" >
+                    </android.gesture.GestureOverlayView>
+
+                </LinearLayout>
+                <Button
+                    android:background="@drawable/textback"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="Submit"
+                    android:layout_margin="20dp"/>
+
+            </LinearLayout>
+<!--
+          <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal">
+
+                <ProgressBar
+                    android:id="@+id/main_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <include layout="@layout/error_layout" />
+            </LinearLayout>-->
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+</LinearLayout>
+
