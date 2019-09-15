@@ -1,5 +1,6 @@
 package com.electron.activity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -74,6 +75,7 @@ public class AppoinmentActivity extends AppCompatActivity {
     private String[] timeSlot;
     private int userId;
     private String date="";
+    private Button bt_newUser,bt_EUser;
 
     private LinearLayout linearLayoutService,linearLayoutCalenderview;
     @Override
@@ -92,6 +94,31 @@ public class AppoinmentActivity extends AppCompatActivity {
         recyclerViewTimeSlot=findViewById(R.id.timeSlot);
         dateTime=findViewById(R.id.date);
         bt_appoinment=findViewById(R.id.appoinment);
+        bt_EUser=findViewById(R.id.EUser);
+        bt_newUser=findViewById(R.id.newUser);
+
+
+        bt_newUser.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NewApi")
+            @Override
+            public void onClick(View v) {
+                bt_newUser.setBackground(getResources().getDrawable(R.drawable.textback));
+                bt_EUser.setBackground(getResources().getDrawable(R.drawable.textbacktwo));
+                bt_EUser.setTextColor(getResources().getColor(R.color.colorPrimary));
+                bt_newUser.setTextColor(getResources().getColor(R.color.white));
+            }
+        });
+        bt_EUser.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NewApi")
+            @Override
+            public void onClick(View v) {
+                bt_EUser.setBackground(getResources().getDrawable(R.drawable.textback));
+                bt_newUser.setBackground(getResources().getDrawable(R.drawable.textbacktwo));
+                bt_EUser.setTextColor(getResources().getColor(R.color.white));
+                bt_newUser.setTextColor(getResources().getColor(R.color.colorPrimary));
+            }
+        });
+
 
         linearLayoutService=findViewById(R.id.layoutService);
         linearLayoutCalenderview=findViewById(R.id.calenderview);

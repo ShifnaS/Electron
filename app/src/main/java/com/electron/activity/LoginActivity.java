@@ -85,8 +85,10 @@ public class LoginActivity extends AppCompatActivity {
 
   public void login() {
 
-    //  Log.d(TAG, "Login");
-   //onLoginSuccess();
+    SharedPreferenceUtils.getInstance(getApplicationContext()).setIntValue(Constants.KEY_USER_ID,2);
+   // SharedPreferenceUtils.getInstance(getApplicationContext()).setStringValue(Constants.KEY_AUTH_PASSWORD,password);
+
+    onLoginSuccess();
 
     if (!validate()) {
       onLoginFailed("Login failed");
