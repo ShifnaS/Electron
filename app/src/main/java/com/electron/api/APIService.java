@@ -14,6 +14,7 @@ import com.electron.model.ResponseTimeSlot;
 import com.electron.model.ResponseUnit;
 import com.electron.model.ResultAppoinment;
 import com.electron.model.ResultList;
+import com.electron.model.UserList;
 import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
@@ -77,6 +78,9 @@ public interface APIService {
   @FormUrlEncoded
   @POST("api/")
   Call<ResponseAppoinmentData> get_appointment_detail(@Field("action")String action, @Field("api_key")String api_key, @Field("order_id") String order_id);
+  @FormUrlEncoded
+  @POST("api/")
+  Call<UserList> get_user_list(@Field("action")String action, @Field("api_key")String api_key, @Field("user_id") String user_id);
 }
 
 

@@ -1,6 +1,7 @@
 package com.electron.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,7 @@ import com.electron.adapter.RecyclerTouchListener;
 import com.electron.adapter.RecyclerViewAdapter;
 import com.electron.adapter.RecyclerViewAdapterDiscount;
 import com.electron.adapter.RecyclerViewAdapterExtra;
+import com.electron.adapter.UserListAdapter;
 import com.electron.api.APIService;
 import com.electron.api.ApiModule;
 import com.electron.model.Discount;
@@ -42,6 +44,8 @@ import com.electron.model.ResponseTimeSlot;
 import com.electron.model.ResponseUnit;
 import com.electron.model.ServiceResponse;
 import com.electron.model.Unit;
+import com.electron.model.User;
+import com.electron.model.UserList;
 import com.electron.utils.Constants;
 import com.electron.utils.SharedPreferenceUtils;
 import java.text.SimpleDateFormat;
@@ -59,16 +63,18 @@ public class AppoinmentActivity extends AppCompatActivity {
     private RecyclerViewAdapterExtra recyclerViewAdapterextra;
     private RecyclerViewAdapterDiscount recyclerViewAdapterdiscount;
     private RecyclerAdapterTimeSlot recyclerAdapterTimeSlot;
+    private UserListAdapter userListAdapter;
     private CalendarView simpleCalendarView;
     private Button bt_appoinment;
 
-    private LinearLayoutManager linearLayoutManager,linearLayoutManagerMethod,linearLayoutManagerUnit;
-    private RecyclerView recyclerView,recyclerViewMethod,recyclerViewUnit,recyclerViewExtra,recyclerViewDiscount,recyclerViewTimeSlot;
+    private LinearLayoutManager linearLayoutManager,linearLayoutManagerMethod,linearLayoutManagerUnit,linearLayoutManagerUser;
+    private RecyclerView recyclerViewUserList,recyclerView,recyclerViewMethod,recyclerViewUnit,recyclerViewExtra,recyclerViewDiscount,recyclerViewTimeSlot;
     private GridLayoutManager layoutManagerExtra,layoutManagerDiscount,layoutManagerTimeSlot;
     private TextView dateTime;
 
     private  ArrayList<ServiceResponse> serviceResponses=new ArrayList<>();
     private ArrayList<Method> methodResponses=new ArrayList<>();
+    private ArrayList<User> userList=new ArrayList<>();
     private  ArrayList<Unit> unitResponses=new ArrayList<>();
     private ArrayList<Extra> extraResponses=new ArrayList<>();
     private ArrayList<Discount> discountResposes=new ArrayList<>();
@@ -112,6 +118,7 @@ public class AppoinmentActivity extends AppCompatActivity {
             @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
+                getEuser();
                 bt_EUser.setBackground(getResources().getDrawable(R.drawable.textback));
                 bt_newUser.setBackground(getResources().getDrawable(R.drawable.textbacktwo));
                 bt_EUser.setTextColor(getResources().getColor(R.color.white));
@@ -149,12 +156,24 @@ public class AppoinmentActivity extends AppCompatActivity {
         recyclerViewTimeSlot.setLayoutManager(layoutManagerTimeSlot);
         recyclerViewTimeSlot.setItemAnimator(new DefaultItemAnimator());
 
+
+
         simpleCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 int m=month+1;
+                String mm="";
+                String dm="";
               //  Toast.makeText(AppoinmentActivity.this, "DATE "+ year+"-"+month+"-"+dayOfMonth, Toast.LENGTH_SHORT).show();
-                date=year+"-0"+m+"-0"+dayOfMonth;
+                if(m<=9)
+                {
+                    mm="0"+m;
+                }
+                if(dayOfMonth<=9)
+                {
+                    dm="0"+dayOfMonth;
+                }
+                date=year+"-"+m+"-"+dayOfMonth;
                 Log.e("1111111", ""+date);
                 getTimeSlot();
             }
@@ -227,6 +246,91 @@ public class AppoinmentActivity extends AppCompatActivity {
         }));
 
     }
+
+    private void getEuser() {
+
+
+        // Create custom dialog object
+        final Dialog dialog = new Dialog(AppoinmentActivity.this);
+        // Include dialog.xml file
+        dialog.setContentView(R.layout.dialog_user);
+        // Set dialog title
+        dialog.setTitle("Select User");
+
+        // set values for custom dialog components - text, image and button
+        recyclerViewUserList = (RecyclerView) dialog.findViewById(R.id.recyclerView);
+        linearLayoutManagerUser = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerViewUserList.setLayoutManager(linearLayoutManagerUser);
+        recyclerViewUserList.setItemAnimator(new DefaultItemAnimator());
+        final ProgressDialog progressDialog = new ProgressDialog(AppoinmentActivity.this,
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Fetching...");
+        progressDialog.show();
+
+        APIService service = ApiModule.getAPIService();
+        Log.e("1111111114",""+date);
+        Call<UserList> call = service.get_user_list("get_user_list","1",""+userId);
+        call.enqueue(new Callback<UserList>() {
+            @Override
+            public void onResponse(Call<UserList> call, Response<UserList> response) {
+                progressDialog.dismiss();
+                try
+                {
+                    Log.e("response","111114 "+response.body().toString());
+
+                    if(response.body()!=null&&response.isSuccessful())
+                    {
+
+                        if(response.body().getStatuscode()==200)
+                        {
+                            userList=response.body().getResponse();
+
+
+                            userListAdapter= new UserListAdapter(getApplicationContext(),userList);
+                            recyclerViewUserList.setAdapter(userListAdapter);
+                        }
+                        else
+                        {
+                            onFailed("None of time slot available please check another dates");
+                        }
+                    }
+                    else
+                    {
+                        onFailed("No Response");
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                    Log.e("Exception ",e.getMessage());
+                }
+            }
+            @Override
+            public void onFailure(Call<UserList> call, Throwable t) {
+                progressDialog.dismiss();
+                Log.e("MyTag", "requestFailed", t);
+                Log.e("Failure ",t.getMessage());
+
+            }
+        });
+
+        dialog.show();
+        recyclerViewUserList.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerViewUserList, new RecyclerTouchListener.ClickListener() {
+            public void onClick(View param1View, int param1Int) {
+                User user= userList.get(param1Int);
+                Toast.makeText(AppoinmentActivity.this, "hiii "+user.getId(), Toast.LENGTH_SHORT).show();
+                int service_id=Integer.parseInt(user.getId());
+                dialog.dismiss();
+
+            }
+
+            public void onLongClick(View param1View, int param1Int) {}
+        }));
+
+
+    }
+
     private void getTimeSlot() {
         final ProgressDialog progressDialog = new ProgressDialog(AppoinmentActivity.this,
                 R.style.AppTheme_Dark_Dialog);
@@ -235,6 +339,7 @@ public class AppoinmentActivity extends AppCompatActivity {
         progressDialog.show();
 
         APIService service = ApiModule.getAPIService();
+        Log.e("1111111114",""+date);
         Call<ResponseTimeSlot> call = service.getTimeSlot("get_slots","1",date,userId);
         call.enqueue(new Callback<ResponseTimeSlot>() {
             @Override

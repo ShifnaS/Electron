@@ -47,7 +47,7 @@
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:textAlignment="center"
-                android:text="New Booking" />
+                android:text="Task Details" />
 
 
 
@@ -406,9 +406,6 @@
                     android:layout_margin="20dp"/>
 
             </LinearLayout>
-
-
-
 
         </LinearLayout>
 
